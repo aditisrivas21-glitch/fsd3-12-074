@@ -9,6 +9,7 @@ update `type:module`
 
 ```
 script{
+    
     "start": "node app.js",
     "dev": "nodemon prg7.js"
 }
@@ -24,3 +25,5 @@ script{
 -for other method type we use third party API Tester like postman,thunder,client,echo,api etc
 
 EchoAPI for VS Code
+
+# 
