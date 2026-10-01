@@ -9,7 +9,7 @@ update `type:module`
 
 ```
 script{
-    
+
     "start": "node app.js",
     "dev": "nodemon prg7.js"
 }
@@ -26,4 +26,26 @@ script{
 
 EchoAPI for VS Code
 
-# 
+# Request Type 
+1. GET  - GET ALL, GET BY ID 
+
+Get : /api/products/
+Get : /api/products/101
+
+
+2. POST
+
+Post: /api/products
+and data will be shared by EchoAPI Body section
+
+3. PUT/PATCH 
+
+Put/Patch: /api/products/201
+(id and echoapi body both are used)
+
+4. DELETE
+
+delete: /api/products/110
+
+
+Exported fun can be imported by 
