@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact | Nexus</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        background: #f7f8fc;
+        color: #222;
+      }
+
+      header {
+        background: #111827;
+        color: white;
+        padding: 18px 8%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      header h1 {
+        font-size: 26px;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        margin-left: 25px;
+        font-size: 15px;
+      }
+
+      nav a:hover {
+        color: #60a5fa;
+      }
+
+      .container {
+        width: 85%;
+        max-width: 1000px;
+        margin: 60px auto;
+      }
+
+      .heading {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .heading h2 {
+        font-size: 38px;
+        margin-bottom: 10px;
+      }
+
+      .heading p {
+        color: #666;
+      }
+
+      .contact-box {
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: 30px;
+      }
+
+      .info,
+      .form-box {
+        background: white;
+        padding: 30px;
+        border-radius: 14px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      }
+
+      .info h3 {
+        margin-bottom: 20px;
+        font-size: 24px;
+      }
+
+      .info p {
+        margin: 18px 0;
+        color: #555;
+        line-height: 1.6;
+      }
+
+      .form-group {
+        margin-bottom: 18px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 7px;
+        font-weight: bold;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 7px;
+        font-size: 15px;
+        outline: none;
+      }
+
+      input:focus,
+      textarea:focus {
+        border-color: #2563eb;
+      }
+
+      textarea {
+        height: 140px;
+        resize: vertical;
+      }
+
+      .btn {
+        background: #2563eb;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 7px;
+        cursor: pointer;
+        font-size: 15px;
+      }
+
+      .btn:hover {
+        background: #1d4ed8;
+      }
+
+      footer {
+        background: #111827;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        margin-top: 60px;
+      }
+
+      @media (max-width: 700px) {
+        header {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        nav a {
+          margin: 0 8px;
+        }
+
+        .contact-box {
+          grid-template-columns: 1fr;
+        }
+
+        .heading h2 {
+          font-size: 30px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Nexus</h1>
+
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="product.html">Products</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </header>
+
+    <div class="container">
+      <div class="heading">
+        <h2>Contact Us</h2>
+        <p>Have a question? We'd love to hear from you.</p>
+      </div>
+
+      <div class="contact-box">
+        <div class="info">
+          <h3>Get in Touch</h3>
+
+          <p>
+            📧 <strong>Email:</strong><br />
+            support@nexus.com
+          </p>
+
+          <p>
+            📞 <strong>Phone:</strong><br />
+            +91 98765 43210
+          </p>
+
+          <p>
+            📍 <strong>Address:</strong><br />
+            Ghaziabad, Uttar Pradesh, India
+          </p>
+
+          <p>
+            🕐 <strong>Working Hours:</strong><br />
+            Monday - Saturday, 9:00 AM - 6:00 PM
+          </p>
+        </div>
+
+        <div class="form-box">
+          <form onsubmit="submitForm(event)">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input
+                type="text"
+                id="name"
+                placeholder="Enter your name"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input
+                type="text"
+                id="subject"
+                placeholder="Enter subject"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea
+                id="message"
+                placeholder="Write your message..."
+                required
+              ></textarea>
+            </div>
+
+            <button type="submit" class="btn">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2026 Nexus. All rights reserved.</p>
+    </footer>
+
+    <script>
+      function submitForm(event) {
+        event.preventDefault();
+
+        const name = document.getElementById("name").value;
+
+        alert("Thank you, " + name + "! Your message has been submitted.");
+
+        document.querySelector("form").reset();
+      }
+    </script>
+  </body>
+</html>

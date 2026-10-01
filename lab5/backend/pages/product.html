@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products | Nexus</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f7f8fc;
+            color: #222;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 18px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 26px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 15px;
+        }
+
+        nav a:hover {
+            color: #60a5fa;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 55px 20px 35px;
+        }
+
+        .hero h2 {
+            font-size: 38px;
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            color: #666;
+            font-size: 17px;
+        }
+
+        .products {
+            width: 84%;
+            margin: 20px auto 60px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 22px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            height: 180px;
+            background: #eef2ff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 55px;
+            margin-bottom: 18px;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 7px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #1d4ed8;
+        }
+
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 0 8px;
+            }
+
+            .hero h2 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Nexus</h1>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="product.html">Products</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h2>Our Products</h2>
+    <p>Explore our latest products and find what you need.</p>
+</section>
+
+<section class="products">
+
+    <div class="card">
+        <div class="product-image">💻</div>
+        <h3>Smart Laptop</h3>
+        <p>Powerful performance for study, work and entertainment.</p>
+        <div class="price">₹49,999</div>
+        <button class="btn" onclick="addToCart('Smart Laptop')">
+            Add to Cart
+        </button>
+    </div>
+
+    <div class="card">
+        <div class="product-image">🎧</div>
+        <h3>Wireless Headphones</h3>
+        <p>Enjoy clear sound with comfortable wireless headphones.</p>
+        <div class="price">₹2,499</div>
+        <button class="btn" onclick="addToCart('Wireless Headphones')">
+            Add to Cart
+        </button>
+    </div>
+
+    <div class="card">
+        <div class="product-image">⌚</div>
+        <h3>Smart Watch</h3>
+        <p>Track your daily activities with a modern smart watch.</p>
+        <div class="price">₹3,999</div>
+        <button class="btn" onclick="addToCart('Smart Watch')">
+            Add to Cart
+        </button>
+    </div>
+
+    <div class="card">
+        <div class="product-image">📱</div>
+        <h3>Smart Phone</h3>
+        <p>Fast, stylish and reliable smartphone for everyday use.</p>
+        <div class="price">₹19,999</div>
+        <button class="btn" onclick="addToCart('Smart Phone')">
+            Add to Cart
+        </button>
+    </div>
+
+</section>
+
+<footer>
+    <p>© 2026 Nexus. All rights reserved.</p>
+</footer>
+
+<script>
+    function addToCart(product) {
+        alert(product + " added to cart!");
+    }
+</script>
+
+</body>
+</html>
