@@ -15,4 +15,8 @@ app.use((req,res) => {
     res.status(404).send("<h1>Page not found</h1>")
 });
 
+app.get("api/products/:pid",(req,res)=> {
+
+})
+
 app.listen(4444, () => console.log("prg 4 is running on port 4444"));
