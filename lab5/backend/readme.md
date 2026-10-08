@@ -40,3 +40,10 @@ app.get("/",(req,res)=>{
 //this line must be last line
 app.listen(4444,()=> console.log("prg1 is running at 4444"));
 ```
+```
+
+
+# Static 
+in express  we can add any static html pages with the help of express.staticpin
+
+express support middleware,when we have to execute some function before server execution then we use middleware app.use always apply to insert any middleware. 

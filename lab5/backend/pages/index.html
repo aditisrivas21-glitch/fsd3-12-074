@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Academy - Premier Online Coaching & Mentorship</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            200: '#c7d2fe',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81',
+                            950: '#1e1b4b',
+                        },
+                        accent: {
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar and page animations */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4f46e5;
+        }
+        .page-view {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.25s ease-in-out;
+        }
+        .page-view.active {
+            display: block;
+            opacity: 1;
+        }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+        }
+        .dark .glass-nav {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans transition-colors duration-300 flex flex-col min-h-screen">
+
+    <!-- ANNOUNCEMENT BANNER TICKER -->
+    <div class="bg-gradient-to-r from-brand-700 via-indigo-600 to-emerald-600 text-white text-xs font-semibold py-2 px-4 shadow-inner">
+        <div class="max-w-7xl mx-auto flex justify-between items-center overflow-hidden">
+            <div class="flex items-center space-x-2 animate-pulse whitespace-nowrap">
+                <span class="bg-accent-500 text-slate-950 text-[10px] uppercase font-black px-2 py-0.5 rounded-full">New</span>
+                <span>Admissions open for JEE / NEET / Tech 2026-2027 Batches! Get up to 30% Early Bird Scholarship.</span>
+            </div>
+            <div class="hidden md:flex items-center space-x-4 text-[11px] font-medium">
+                <a href="tel:+18005550199" class="hover:underline flex items-center gap-1"><i class="fa-solid fa-phone text-accent-400"></i> +1 (800) 555-0199</a>
+                <span>|</span>
+                <span id="countdown-ticker" class="font-mono text-emerald-300"><i class="fa-regular fa-clock"></i> Next Batch in 02d : 14h : 30m</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- STICKY GLASSMORPHISM NAVBAR -->
+    <header class="sticky top-0 z-40 glass-nav border-b border-slate-200/80 dark:border-slate-800/80 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTo('home')">
+                    <div class="w-11 h-11 bg-gradient-to-tr from-brand-600 to-emerald-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-brand-500/30">
+                        <i class="fa-solid fa-graduation-cap text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">Apex<span class="text-brand-600 dark:text-brand-500">Academy</span></span>
+                        <span class="block text-[10px] uppercase tracking-widest text-slate-400 font-bold -mt-1">Excellence Unlocked</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden lg:flex space-x-1 items-center bg-slate-100/80 dark:bg-slate-900/80 p-1.5 rounded-2xl border border-slate-200/60 dark:border-slate-800/60">
+                    <button onclick="navigateTo('home')" id="nav-home" class="nav-btn px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 text-brand-600 dark:text-brand-400 bg-white dark:bg-slate-800 shadow-sm">Home</button>
+                    <button onclick="navigateTo('courses')" id="nav-courses" class="nav-btn px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400">Courses & Programs</button>
+                    <button onclick="navigateTo('schedule')" id="nav-schedule" class="nav-btn px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400">Live Schedule</button>
+                    <button onclick="navigateTo('about')" id="nav-about" class="nav-btn px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400">About & Faculty</button>
+                    <button onclick="navigateTo('contact')" id="nav-contact" class="nav-btn px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400">Contact & FAQs</button>
+                </nav>
+
+                <!-- Action Controls: Dark Mode, Quick Search, Demo CTA -->
+                <div class="flex items-center space-x-3">
+                    <!-- Quick Search Trigger -->
+                    <button onclick="navigateTo('courses')" class="p-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition" title="Search Courses">
+                        <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                    </button>
+
+                    <!-- Dark Mode Toggle Button -->
+                    <button id="theme-toggle" onclick="toggleDarkMode()" class="p-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition" title="Toggle Theme">
+                        <i id="theme-icon" class="fa-solid fa-moon text-sm"></i>
+                    </button>
+
+                    <!-- CTA Button -->
+                    <button onclick="openDemoModal()" class="hidden sm:inline-flex items-center px-5 py-2.5 rounded-xl font-bold text-xs text-white bg-brand-600 hover:bg-brand-500 transition shadow-lg shadow-brand-500/30 active:scale-95">
+                        <span>Join Free Demo</span>
+                        <i class="fa-solid fa-arrow-right-long ml-2 text-xs"></i>
+                    </button>
+
+                    <!-- Mobile Hamburger -->
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="lg:hidden p-2.5 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobile-menu" class="hidden lg:hidden border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-3 pb-6 space-y-2">
+            <button onclick="navigateTo('home'); toggleMobileMenu();" class="w-full text-left px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-brand-50 dark:hover:bg-slate-800 flex items-center space-x-3">
+                <i class="fa-solid fa-house text-brand-600 w-5"></i><span>Home</span>
+            </button>
+            <button onclick="navigateTo('courses'); toggleMobileMenu();" class="w-full text-left px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-brand-50 dark:hover:bg-slate-800 flex items-center space-x-3">
+                <i class="fa-solid fa-book-open text-brand-600 w-5"></i><span>Courses & Programs</span>
+            </button>
+            <button onclick="navigateTo('schedule'); toggleMobileMenu();" class="w-full text-left px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-brand-50 dark:hover:bg-slate-800 flex items-center space-x-3">
+                <i class="fa-solid fa-calendar-days text-brand-600 w-5"></i><span>Live Schedule</span>
+            </button>
+            <button onclick="navigateTo('about'); toggleMobileMenu();" class="w-full text-left px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-brand-50 dark:hover:bg-slate-800 flex items-center space-x-3">
+                <i class="fa-solid fa-users text-brand-600 w-5"></i><span>About & Faculty</span>
+            </button>
+            <button onclick="navigateTo('contact'); toggleMobileMenu();" class="w-full text-left px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-200 hover:bg-brand-50 dark:hover:bg-slate-800 flex items-center space-x-3">
+                <i class="fa-solid fa-envelope text-brand-600 w-5"></i><span>Contact & FAQs</span>
+            </button>
+            <div class="pt-3">
+                <button onclick="openDemoModal(); toggleMobileMenu();" class="w-full py-3 rounded-xl font-bold text-center text-xs text-white bg-brand-600 hover:bg-brand-500 shadow-lg">
+                    Book Free Demo Class
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+
+        <!-- =================================================================== -->
+        <!-- VIEW 1: HOME PAGE -->
+        <!-- =================================================================== -->
+        <section id="page-home" class="page-view active">
+            <!-- Hero Section -->
+            <div class="relative overflow-hidden bg-slate-900 text-white py-20 lg:py-28">
+                <!-- Animated Background Mesh Grid -->
+                <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#6366f1_1px,transparent_1px)] [background-size:24px_24px]"></div>
+                <div class="absolute -top-40 -right-40 w-96 h-96 bg-brand-600/30 rounded-full blur-3xl"></div>
+                <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-emerald-600/20 rounded-full blur-3xl"></div>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        <div class="space-y-6 text-center lg:text-left">
+                            <div class="inline-flex items-center space-x-2 bg-brand-500/10 border border-brand-500/30 text-brand-300 px-3.5 py-1.5 rounded-full text-xs font-semibold">
+                                <span class="w-2 h-2 rounded-full bg-accent-400 animate-ping"></span>
+                                <span>#1 Rated Online Academic & Competitive Platform</span>
+                            </div>
+                            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
+                                Transform Potential into <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-brand-300 to-accent-400">Peak Performance</span>
+                            </h1>
+                            <p class="text-slate-300 text-sm sm:text-base max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                                Live interactive lectures, instant 1-on-1 doubt resolution, adaptive AI test series, and instruction by top ranking alumni from world-leading universities.
+                            </p>
+
+                            <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                                <button onclick="navigateTo('courses')" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs uppercase tracking-wider transition shadow-lg shadow-brand-500/30 flex items-center justify-center space-x-2">
+                                    <span>Explore All Programs</span>
+                                    <i class="fa-solid fa-compass"></i>
+                                </button>
+                                <button onclick="openDemoModal()" class="w-full sm:w-auto px-8 py-3.5 rounded-xl border border-slate-700 bg-slate-800/80 hover:bg-slate-800 text-slate-200 font-bold text-xs uppercase tracking-wider transition flex items-center justify-center space-x-2">
+                                    <i class="fa-solid fa-circle-play text-brand-400 text-base"></i>
+                                    <span>Watch Interactive Demo</span>
+                                </button>
+                            </div>
+
+                            <!-- Trust Badges -->
+                            <div class="pt-6 border-t border-slate-800/80 flex items-center justify-center lg:justify-start space-x-6 text-xs text-slate-400">
+                                <span class="flex items-center"><i class="fa-solid fa-circle-check text-accent-400 mr-2"></i> 100% Live Classes</span>
+                                <span class="flex items-center"><i class="fa-solid fa-circle-check text-accent-400 mr-2"></i> Max 25 per Batch</span>
+                                <span class="flex items-center"><i class="fa-solid fa-circle-check text-accent-400 mr-2"></i> 24/7 Mentorship</span>
+                            </div>
+                        </div>
+
+                        <!-- Hero Interactive Feature Visual -->
+                        <div class="relative">
+                            <div class="bg-gradient-to-br from-brand-600/30 to-slate-800/90 backdrop-blur-xl border border-white/10 rounded-3xl p-6 shadow-2xl">
+                                <div class="bg-slate-950 rounded-2xl p-5 border border-slate-800">
+                                    <div class="flex items-center justify-between pb-3 border-b border-slate-800 text-xs text-slate-400">
+                                        <div class="flex space-x-2">
+                                            <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span>
+                                            <span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
+                                            <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
+                                        </div>
+                                        <span class="text-accent-400 font-mono text-[11px]"><i class="fa-solid fa-tower-broadcast text-xs animate-pulse mr-1"></i> LIVE INTERACTIVE SUITE</span>
+                                    </div>
+                                    <div class="py-6 px-2 space-y-4">
+                                        <div class="flex items-center justify-between bg-slate-900 p-3 rounded-xl border border-slate-800">
+                                            <div class="flex items-center space-x-3">
+                                                <div class="w-10 h-10 rounded-lg bg-brand-600/30 text-brand-400 flex items-center justify-center font-bold">
+                                                    <i class="fa-solid fa-microchip"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="text-xs font-bold text-white">Advanced Data Structures</div>
+                                                    <div class="text-[10px] text-slate-400">Batch Alpha • Prof. Alex Rivera</div>
+                                                </div>
+                                            </div>
+                                            <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-1 rounded">Active</span>
+                                        </div>
+
+                                        <!-- Code/Math Snippet Mockup -->
+                                        <div class="p-4 bg-slate-900 rounded-xl text-left text-xs font-mono text-slate-300 border border-slate-800 space-y-1">
+                                            <div><span class="text-brand-400">class</span> <span class="text-amber-300">BinarySearchTree</span> {</div>
+                                            <div class="pl-4"><span class="text-emerald-400">public:</span></div>
+                                            <div class="pl-8 text-slate-400">// Time Complexity: O(log N) average</div>
+                                            <div class="pl-8"><span class="text-indigo-400">Node*</span> insert(<span class="text-indigo-400">Node*</span> root, <span class="text-indigo-400">int</span> key);</div>
+                                            <div>};</div>
+                                        </div>
+
+                                        <div class="flex items-center justify-between text-xs text-slate-400 pt-2">
+                                            <span><i class="fa-solid fa-users text-brand-400 mr-1"></i> 24 Students Active</span>
+                                            <button onclick="openDemoModal()" class="text-xs font-bold text-brand-400 hover:text-brand-300 flex items-center gap-1">
+                                                <span>Join Stream</span> <i class="fa-solid fa-arrow-right"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Ticker Bar -->
+            <div class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-10 shadow-sm">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                        <div class="space-y-1">
+                            <div class="text-3xl sm:text-4xl font-black text-brand-600 dark:text-brand-400">10,000+</div>
+                            <div class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Students Mentored</div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="text-3xl sm:text-4xl font-black text-emerald-500">98.4%</div>
+                            <div class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Success Rate</div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="text-3xl sm:text-4xl font-black text-brand-600 dark:text-brand-400">50+</div>
+                            <div class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Master Tutors</div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="text-3xl sm:text-4xl font-black text-amber-500">4.9 / 5.0</div>
+                            <div class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Average Rating</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Why Choose Us Grid -->
+            <div class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <span class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-widest">The Apex Advantage</span>
+                    <h2 class="text-3xl font-black text-slate-900 dark:text-white sm:text-4xl mt-2">Why Top Rankers Trust Apex Academy</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition duration-300">
+                        <div class="w-12 h-12 bg-indigo-50 dark:bg-indigo-950/60 text-brand-600 dark:text-brand-400 rounded-xl flex items-center justify-center text-xl mb-5">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">Live Interactive Classes</h3>
+                        <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Two-way video & voice interaction in small batches of max 25 students for personalized attention.</p>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition duration-300">
+                        <div class="w-12 h-12 bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 rounded-xl flex items-center justify-center text-xl mb-5">
+                            <i class="fa-solid fa-video"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">HD Recorded Sessions</h3>
+                        <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Access lifetime recordings, timestamped notes, and searchable transcripts within 2 hours of live class.</p>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition duration-300">
+                        <div class="w-12 h-12 bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 rounded-xl flex items-center justify-center text-xl mb-5">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">AI-Powered Mock Tests</h3>
+                        <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Adaptive testing algorithms detect concept weaknesses and generate custom revision quizzes.</p>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition duration-300">
+                        <div class="w-12 h-12 bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 rounded-xl flex items-center justify-center text-xl mb-5">
+                            <i class="fa-solid fa-user-check"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">1-on-1 Mentorship</h3>
+                        <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Dedicated academic counselors for regular study planning, exam strategy, and doubt resolution.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Featured Courses Preview Carousel/Grid -->
+            <div class="bg-slate-100/70 dark:bg-slate-900/40 py-20 border-y border-slate-200/80 dark:border-slate-800/80">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                        <div>
+                            <span class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-widest">Handpicked Programs</span>
+                            <h2 class="text-3xl font-black text-slate-900 dark:text-white mt-1">Featured Flagship Batches</h2>
+                        </div>
+                        <button onclick="navigateTo('courses')" class="mt-4 md:mt-0 text-xs font-bold text-brand-600 dark:text-brand-400 hover:underline flex items-center gap-2">
+                            <span>View All 24 Programs</span> <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <!-- Cards Row -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <!-- Card 1 -->
+                        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl transition flex flex-col justify-between">
+                            <div>
+                                <div class="relative">
+                                    <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80" alt="Fullstack Coding" class="w-full h-48 object-cover">
+                                    <span class="absolute top-3 left-3 bg-brand-600 text-white text-[10px] font-black uppercase px-2.5 py-1 rounded-full">Coding & Tech</span>
+                                    <span class="absolute top-3 right-3 bg-slate-950/80 text-amber-400 text-xs font-bold px-2 py-1 rounded-lg"><i class="fa-solid fa-star mr-1"></i>4.9</span>
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Fullstack Software Engineering</h3>
+                                    <p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 mb-4">Master Data Structures, System Design, React, Node.js, and Python backend with 12 live industry projects.</p>
+                                    <div class="flex items-center text-xs text-slate-500 dark:text-slate-400 gap-4">
+                                        <span><i class="fa-regular fa-clock mr-1"></i> 6 Months</span>
+                                        <span><i class="fa-solid fa-layer-group mr-1"></i> Intermediate</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/60 mt-4 flex items-center justify-between">
+                                <div>
+                                    <div class="text-xs text-slate-400 line-through">$499</div>
+                                    <div class="text-xl font-extrabold text-slate-900 dark:text-white">$299</div>
+                                </div>
+                                <button onclick="openCourseModal('Fullstack Software Engineering', 'Tech', '$299', 'Comprehensive 6-month developer bootcamp covering DSA, Frontend, Backend & System Design.')" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold rounded-xl transition">
+                                    Enroll Now
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl transition flex flex-col justify-between">
+                            <div>
+                                <div class="relative">
+                                    <img src="https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?auto=format&fit=crop&w=600&q=80" alt="JEE Prep" class="w-full h-48 object-cover">
+                                    <span class="absolute top-3 left-3 bg-emerald-600 text-white text-[10px] font-black uppercase px-2.5 py-1 rounded-full">JEE / NEET Entrance</span>
+                                    <span class="absolute top-3 right-3 bg-slate-950/80 text-amber-400 text-xs font-bold px-2 py-1 rounded-lg"><i class="fa-solid fa-star mr-1"></i>5.0</span>
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">IIT-JEE Advanced Target 2027</h3>
+                                    <p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 mb-4">Complete Physics, Chemistry, and Mathematics deep-dive course with daily practice problem sets.</p>
+                                    <div class="flex items-center text-xs text-slate-500 dark:text-slate-400 gap-4">
+                                        <span><i class="fa-regular fa-clock mr-1"></i> 12 Months</span>
+                                        <span><i class="fa-solid fa-layer-group mr-1"></i> Class 11-12</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/60 mt-4 flex items-center justify-between">
+                                <div>
+                                    <div class="text-xs text-slate-400 line-through">$899</div>
+                                    <div class="text-xl font-extrabold text-slate-900 dark:text-white">$599</div>
+                                </div>
+                                <button onclick="openCourseModal('IIT-JEE Advanced Target 2027', 'JEE/NEET', '$599', 'Complete 1-year target batch with Ex-IITian faculty, mock test series, and rank booster seminars.')" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold rounded-xl transition">
+                                    Enroll Now
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl transition flex flex-col justify-between">
+                            <div>
+                                <div class="relative">
+                                    <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80" alt="CBSE Board" class="w-full h-48 object-cover">
+                                    <span class="absolute top-3 left-3 bg-amber-600 text-white text-[10px] font-black uppercase px-2.5 py-1 rounded-full">School Tuition K-12</span>
+                                    <span class="absolute top-3 right-3 bg-slate-950/80 text-amber-400 text-xs font-bold px-2 py-1 rounded-lg"><i class="fa-solid fa-star mr-1"></i>4.8</span>
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Class 10 CBSE/ICSE Board Master</h3>
+                                    <p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 mb-4">Complete Board syllabus coverage for Science, Mathematics, and Social Studies with board sample papers.</p>
+                                    <div class="flex items-center text-xs text-slate-500 dark:text-slate-400 gap-4">
+                                        <span><i class="fa-regular fa-clock mr-1"></i> 9 Months</span>
+                                        <span><i class="fa-solid fa-layer-group mr-1"></i> Class 10</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/60 mt-4 flex items-center justify-between">
+                                <div>
+                                    <div class="text-xs text-slate-400 line-through">$399</div>
+                                    <div class="text-xl font-extrabold text-slate-900 dark:text-white">$249</div>
+                                </div>
+                                <button onclick="openCourseModal('Class 10 CBSE/ICSE Board Master', 'Tuition', '$249', 'Guaranteed board score enhancement with chapter-wise sample papers and strategy workshops.')" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold rounded-xl transition">
+                                    Enroll Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rankers Testimonials Section -->
+            <div class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <span class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-widest">Proven Rankers</span>
+                    <h2 class="text-3xl font-black text-slate-900 dark:text-white mt-1">Student Success Stories</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="p-6 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+                        <div class="space-y-4">
+                            <div class="flex text-amber-400 text-xs">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 italic leading-relaxed">"The 1-on-1 doubt clearing feature and daily practice problem breakdown helped me secure All India Rank 14 in JEE Advanced!"</p>
+                        </div>
+                        <div class="flex items-center space-x-3 pt-6 mt-6 border-t border-slate-100 dark:border-slate-800">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&h=120&q=80" alt="Ananya" class="w-10 h-10 rounded-full object-cover">
+                            <div>
+                                <div class="text-xs font-bold text-slate-900 dark:text-white">Ananya Sharma</div>
+                                <div class="text-[10px] text-brand-600 dark:text-brand-400 font-semibold">AIR 14 • JEE Advanced 2025</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+                        <div class="space-y-4">
+                            <div class="flex text-amber-400 text-xs">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 italic leading-relaxed">"Transitioning into software development was effortless thanks to Prof. Alex's DSA and System Design curriculum."</p>
+                        </div>
+                        <div class="flex items-center space-x-3 pt-6 mt-6 border-t border-slate-100 dark:border-slate-800">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&h=120&q=80" alt="Rohan" class="w-10 h-10 rounded-full object-cover">
+                            <div>
+                                <div class="text-xs font-bold text-slate-900 dark:text-white">Rohan Gupta</div>
+                                <div class="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">Software Engineer @ Tech Corp</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+                        <div class="space-y-4">
+                            <div class="flex text-amber-400 text-xs">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 italic leading-relaxed">"Apex Academy's board test series matched 90% of the actual CBSE Class 10 questions. I scored 98.2% overall!"</p>
+                        </div>
+                        <div class="flex items-center space-x-3 pt-6 mt-6 border-t border-slate-100 dark:border-slate-800">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&h=120&q=80" alt="Priya" class="w-10 h-10 rounded-full object-cover">
+                            <div>
+                                <div class="text-xs font-bold text-slate-900 dark:text-white">Priya Nair</div>
+                                <div class="text-[10px] text-amber-600 dark:text-amber-400 font-semibold">98.2% • Class 10 Board Topper</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- VIEW 2: COURSES & PROGRAMS PAGE -->
+        <!-- =================================================================== -->
+        <section id="page-courses" class="page-view">
+            <!-- Header Header -->
+            <div class="bg-slate-900 text-white py-14">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h1 class="text-3xl sm:text-4xl font-black">All Coaching Programs & Courses</h1>
+                    <p class="text-slate-400 text-xs sm:text-sm mt-2 max-w-2xl">Filter through our live masterclass streams for competitive exams, school tuitions, tech skilling, and civil services.</p>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                <!-- Search & Filter Controls -->
+                <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm mb-10 flex flex-col md:flex-row gap-4 items-center justify-between">
+                    <div class="relative w-full md:w-1/2">
+                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                        <input type="text" id="course-search-input" onkeyup="filterCourses()" placeholder="Search by course title, keyword or instructor..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 dark:bg-slate-950 text-xs focus:outline-none focus:border-brand-500">
+                    </div>
+
+                    <!-- Category Tab Controls -->
+                    <div class="flex flex-wrap gap-2 w-full md:w-auto">
+                        <button onclick="filterCategory('all', this)" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-brand-600 text-white">All</button>
+                        <button onclick="filterCategory('jee', this)" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">JEE/NEET</button>
+                        <button onclick="filterCategory('tuition', this)" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">School K-12</button>
+                        <button onclick="filterCategory('tech', this)" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">Coding & Tech</button>
+                        <button onclick="filterCategory('civil', this)" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">Civil Services</button>
+                    </div>
+                </div>
+
+                <!-- Course Grid -->
+                <div id="course-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Course Item 1 -->
+                    <div class="course-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl transition flex flex-col justify-between" data-category="tech" data-title="fullstack software engineering python javascript web dsa">
+                        <div>
+                            <div class="relative">
+                                <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover" alt="Course Image">
+                                <span class="absolute top-3 left-3 bg-brand-600 text-white text-[10px] font-black uppercase px-2.5 py-1 rounded-full">Coding & Tech</span>
+                                <span class="absolute top-3 right-3 bg-slate-950/80 text-amber-400 text-xs font-bold px-2 py-1 rounded-lg"><i class="fa-solid fa-star mr-1"></i>4.9</span>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">Fullstack Software Engineering</h3>
+                                <p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 mb-4">Master Data Structures, System Design, React, Node.js, and Python backend with 12 live industry projects.</p>
+                                <div class="text-[11px] text-slate-500 dark:text-slate-400 space-y-1">
+                                    <div><i class="fa-solid fa-chalkboard-user text-brand-500 mr-1.5"></i> Prof. Alex Rivera (Ex-FAANG)</div>
+                                    <div><i class="fa-regular fa-clock text-brand-500 mr-1.5"></i> 6 Months (Live Weekend Batches)</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/60 mt-4 flex items-center justify-between">
+                            <span class="text-lg font-extrabold text-slate-900 dark:text-white">$299</span>
+                            <button onclick="openCourseModal('Fullstack Software Engineering', 'Coding & Tech', '$299', 'Fullstack web development including Git, MERN stack, microservices, and interview prep.')" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold rounded-xl transition">
+                                Course Details
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Course Item 2 -->
+                    <div class="course-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl transition flex flex-col justify-between" data-category="jee" data-title="iit jee advanced physics chemistry mathematics main entrance target">
+                        <div>
+                            <div class="relative">
+                                <img src="https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover" alt="Course Image">
+                                <span class="absolute top-3 left-3 bg-emerald-600 text-white text-[10px] font-black uppercase px-2.5 py-1 rounded-full">JEE / NEET</span>
+                                <span class="absolute top-3 right-3 bg-slate-950/80 text-amber-400 text-xs font-bold px-2 py-1 rounded-lg"><i class="fa-solid fa-star mr-1"></i>5.0</span>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">IIT-JEE Advanced Target 2027</h3>
+                                <p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 mb-4">Complete Physics, Chemistry, and Mathematics deep-dive course with daily practice problem sets.</p>
+                                <div class="text-[11px] text-slate-500 dark:text-slate-400 space-y-1">
+                                    <div><i class="fa-solid fa-chalkboard-user text-emerald-500 mr-1.5"></i> Dr. Rajesh Verma (IIT Gold Medalist)</div>
+                                    <div><i class="fa-regular fa-clock text-emerald-500 mr-1.5"></i> 12 Months (Daily Classes)</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/60 mt-4 flex items-center justify-between">
+                            <span class="text-lg font-extrabold text-slate-900 dark:text-white">$599</span>
+                            <button onclick="openCourseModal('IIT-JEE Advanced Target 2027', 'JEE/NEET', '$599', 'Targeted preparation for top engineering entrance exams with 5,000+ solved problems.')" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold rounded-xl transition">
+                                Course Details
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Course Item 3 -->
+                    <div class="course-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl transition flex flex-col justify-between" data-category="tuition" data-title="class 10 board exam science mathematics cbse icse tuition">
+                        <div>
+                            <div class="relative">
+                                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover" alt="Course Image">
+                                <span class="absolute top-3 left-3 bg-amber-600 text-white text-[10px] font-black uppercase px-2.5 py-1 rounded-full">School K-12</span>
+                                <span class="absolute top-3 right-3 bg-slate-950/80 text-amber-400 text-xs font-bold px-2 py-1 rounded-lg"><i class="fa-solid fa-star mr-1"></i>4.8</span>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">Class 10 CBSE/ICSE Board Master</h3>
+                                <p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 mb-4">Complete Board syllabus coverage for Science, Mathematics, and Social Studies with board sample papers.</p>
+                                <div class="text-[11px] text-slate-500 dark:text-slate-400 space-y-1">
+                                    <div><i class="fa-solid fa-chalkboard-user text-amber-500 mr-1.5"></i> Dr. Sunita Mehra (Senior Academic)</div>
+                                    <div><i class="fa-regular fa-clock text-amber-500 mr-1.5"></i> 9 Months</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/60 mt-4 flex items-center justify-between">
+                            <span class="text-lg font-extrabold text-slate-900 dark:text-white">$249</span>
+                            <button onclick="openCourseModal('Class 10 CBSE/ICSE Board Master', 'School K-12', '$249', 'Guaranteed high board exam performance with mock tests and revision modules.')" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold rounded-xl transition">
+                                Course Details
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Course Item 4 -->
+                    <div class="course-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl transition flex flex-col justify-between" data-category="civil" data-title="civil services general studies upsc ias polity history current affairs">
+                        <div>
+                            <div class="relative">
+                                <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover" alt="Course Image">
+                                <span class="absolute top-3 left-3 bg-purple-600 text-white text-[10px] font-black uppercase px-2.5 py-1 rounded-full">Civil Services</span>
+                                <span class="absolute top-3 right-3 bg-slate-950/80 text-amber-400 text-xs font-bold px-2 py-1 rounded-lg"><i class="fa-solid fa-star mr-1"></i>4.9</span>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">Civil Services General Studies Foundation</h3>
+                                <p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 mb-4">Indian Polity, History, Economy, Governance, and Daily Answer Writing Practice for IAS/PCS.</p>
+                                <div class="text-[11px] text-slate-500 dark:text-slate-400 space-y-1">
+                                    <div><i class="fa-solid fa-chalkboard-user text-purple-500 mr-1.5"></i> Vikramaditya Singh (Ex-Civil Servant)</div>
+                                    <div><i class="fa-regular fa-clock text-purple-500 mr-1.5"></i> 10 Months</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/60 mt-4 flex items-center justify-between">
+                            <span class="text-lg font-extrabold text-slate-900 dark:text-white">$699</span>
+                            <button onclick="openCourseModal('Civil Services GS Foundation', 'Civil Services', '$699', 'Comprehensive preliminary and main examination prep with test series and answer feedback.')" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold rounded-xl transition">
+                                Course Details
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Course Item 5 -->
+                    <div class="course-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl transition flex flex-col justify-between" data-category="jee" data-title="neet medical biology organic chemistry botany zoology">
+                        <div>
+                            <div class="relative">
+                                <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover" alt="Course Image">
+                                <span class="absolute top-3 left-3 bg-emerald-600 text-white text-[10px] font-black uppercase px-2.5 py-1 rounded-full">JEE / NEET</span>
+                                <span class="absolute top-3 right-3 bg-slate-950/80 text-amber-400 text-xs font-bold px-2 py-1 rounded-lg"><i class="fa-solid fa-star mr-1"></i>4.9</span>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">NEET Medical Excellence Batch</h3>
+                                <p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 mb-4">NCERT line-by-line decoding in Biology, Organic Chemistry, and Physics problem solving.</p>
+                                <div class="text-[11px] text-slate-500 dark:text-slate-400 space-y-1">
+                                    <div><i class="fa-solid fa-chalkboard-user text-emerald-500 mr-1.5"></i> Dr. Meera Kapoor (M.D.)</div>
+                                    <div><i class="fa-regular fa-clock text-emerald-500 mr-1.5"></i> 12 Months</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/60 mt-4 flex items-center justify-between">
+                            <span class="text-lg font-extrabold text-slate-900 dark:text-white">$499</span>
+                            <button onclick="openCourseModal('NEET Medical Excellence Batch', 'JEE/NEET', '$499', 'Complete NEET UG syllabus with 3D anatomical lectures and test series.')" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold rounded-xl transition">
+                                Course Details
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Course Item 6 -->
+                    <div class="course-item bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl transition flex flex-col justify-between" data-category="tech" data-title="ai machine learning python data science neural networks">
+                        <div>
+                            <div class="relative">
+                                <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover" alt="Course Image">
+                                <span class="absolute top-3 left-3 bg-brand-600 text-white text-[10px] font-black uppercase px-2.5 py-1 rounded-full">Coding & Tech</span>
+                                <span class="absolute top-3 right-3 bg-slate-950/80 text-amber-400 text-xs font-bold px-2 py-1 rounded-lg"><i class="fa-solid fa-star mr-1"></i>5.0</span>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">Applied AI & Machine Learning</h3>
+                                <p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 mb-4">Python, PyTorch, Large Language Models, Prompt Engineering, and Computer Vision hands-on.</p>
+                                <div class="text-[11px] text-slate-500 dark:text-slate-400 space-y-1">
+                                    <div><i class="fa-solid fa-chalkboard-user text-brand-500 mr-1.5"></i> Prof. Alex Rivera</div>
+                                    <div><i class="fa-regular fa-clock text-brand-500 mr-1.5"></i> 5 Months</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0 border-t border-slate-100 dark:border-slate-800/60 mt-4 flex items-center justify-between">
+                            <span class="text-lg font-extrabold text-slate-900 dark:text-white">$349</span>
+                            <button onclick="openCourseModal('Applied AI & Machine Learning', 'Coding & Tech', '$349', 'Learn LLMs, PyTorch, Scikit-Learn, and build production AI applications.')" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold rounded-xl transition">
+                                Course Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Learning Plans Tier Comparison Table -->
+                <div class="mt-20">
+                    <div class="text-center max-w-2xl mx-auto mb-12">
+                        <span class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-widest">Flexible Options</span>
+                        <h2 class="text-3xl font-black text-slate-900 dark:text-white mt-1">Compare Learning Plans</h2>
+                    </div>
+
+                    <div class="overflow-x-auto bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50">
+                                    <th class="p-5 font-bold text-slate-900 dark:text-white">Plan Features</th>
+                                    <th class="p-5 font-bold text-slate-700 dark:text-slate-300">Basic Tier</th>
+                                    <th class="p-5 font-bold text-brand-600 dark:text-brand-400">Pro Tier (Popular)</th>
+                                    <th class="p-5 font-bold text-emerald-600 dark:text-emerald-400">Premium VIP Tier</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-600 dark:text-slate-300">
+                                <tr>
+                                    <td class="p-5 font-semibold text-slate-900 dark:text-white">Live Interactive Lectures</td>
+                                    <td class="p-5"><i class="fa-solid fa-check text-emerald-500"></i> Yes</td>
+                                    <td class="p-5"><i class="fa-solid fa-check text-emerald-500"></i> Yes</td>
+                                    <td class="p-5"><i class="fa-solid fa-check text-emerald-500"></i> Yes</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-5 font-semibold text-slate-900 dark:text-white">Batch Capacity Limit</td>
+                                    <td class="p-5">Max 100</td>
+                                    <td class="p-5 font-bold text-brand-600">Max 25</td>
+                                    <td class="p-5 font-bold text-emerald-500">Max 10 (Ultra Personalized)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-5 font-semibold text-slate-900 dark:text-white">1-on-1 Dedicated Mentor</td>
+                                    <td class="p-5 text-slate-400"><i class="fa-solid fa-xmark"></i> No</td>
+                                    <td class="p-5"><i class="fa-solid fa-check text-emerald-500"></i> Weekly Session</td>
+                                    <td class="p-5"><i class="fa-solid fa-check text-emerald-500"></i> Unlimited On-Demand</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-5 font-semibold text-slate-900 dark:text-white">AI Diagnostic Tests & Analytics</td>
+                                    <td class="p-5">Basic Reports</td>
+                                    <td class="p-5"><i class="fa-solid fa-check text-emerald-500"></i> Advanced Analytics</td>
+                                    <td class="p-5"><i class="fa-solid fa-check text-emerald-500"></i> Deep AI Recommendations</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-5 font-semibold text-slate-900 dark:text-white">Recorded Class Retention</td>
+                                    <td class="p-5">6 Months</td>
+                                    <td class="p-5">1 Year</td>
+                                    <td class="p-5 font-bold text-emerald-500">Lifetime Access</td>
+                                </tr>
+                                <tr class="bg-slate-50/50 dark:bg-slate-950/50">
+                                    <td class="p-5"></td>
+                                    <td class="p-5"><button onclick="openDemoModal()" class="px-4 py-2 bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-white font-bold rounded-xl">Choose Basic</button></td>
+                                    <td class="p-5"><button onclick="openDemoModal()" class="px-4 py-2 bg-brand-600 text-white font-bold rounded-xl shadow-md">Choose Pro</button></td>
+                                    <td class="p-5"><button onclick="openDemoModal()" class="px-4 py-2 bg-emerald-600 text-white font-bold rounded-xl shadow-md">Choose Premium VIP</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- VIEW 3: LIVE SCHEDULE & BATCHES PAGE -->
+        <!-- =================================================================== -->
+        <section id="page-schedule" class="page-view">
+            <!-- Header -->
+            <div class="bg-slate-900 text-white py-14">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h1 class="text-3xl sm:text-4xl font-black">Interactive Timetable & Batch Schedules</h1>
+                    <p class="text-slate-400 text-xs sm:text-sm mt-2 max-w-2xl">View upcoming live streaming sessions, current batch availability, and book demo classes.</p>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                <!-- Live Class Countdown Card -->
+                <div class="bg-gradient-to-r from-brand-900 via-slate-900 to-slate-900 text-white p-8 rounded-3xl border border-brand-500/30 shadow-xl mb-12 flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="space-y-2">
+                        <span class="inline-flex items-center gap-1.5 bg-accent-500/20 text-accent-400 border border-accent-500/30 px-3 py-1 rounded-full text-xs font-bold uppercase">
+                            <span class="w-2 h-2 rounded-full bg-accent-400 animate-ping"></span> Live Broadcast Starting Soon
+                        </span>
+                        <h3 class="text-2xl font-bold">Advanced Graph Algorithms & Dynamic Programming</h3>
+                        <p class="text-xs text-slate-300">Instructor: Prof. Alex Rivera • Room ID: #APEX-DSA-901</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="text-center font-mono bg-slate-950/80 p-3 rounded-2xl border border-slate-800">
+                            <span class="block text-2xl font-extrabold text-brand-400">01</span>
+                            <span class="text-[10px] text-slate-400 uppercase">Hours</span>
+                        </div>
+                        <div class="text-center font-mono bg-slate-950/80 p-3 rounded-2xl border border-slate-800">
+                            <span class="block text-2xl font-extrabold text-brand-400">24</span>
+                            <span class="text-[10px] text-slate-400 uppercase">Mins</span>
+                        </div>
+                        <div class="text-center font-mono bg-slate-950/80 p-3 rounded-2xl border border-slate-800">
+                            <span class="block text-2xl font-extrabold text-brand-400">18</span>
+                            <span class="text-[10px] text-slate-400 uppercase">Secs</span>
+                        </div>
+                        <button onclick="openDemoModal()" class="px-5 py-3.5 bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold uppercase rounded-xl transition shadow-lg">
+                            Join Stream
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Schedule Table & Filters -->
+                <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 space-y-6">
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <h2 class="text-xl font-bold text-slate-900 dark:text-white">Weekly Live Class Timetable</h2>
+                        <div class="flex items-center space-x-2 text-xs font-semibold">
+                            <span class="text-slate-500">Filter Day:</span>
+                            <select id="day-filter" onchange="filterSchedule()" class="px-3 py-2 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-800 dark:text-slate-100 focus:outline-none">
+                                <option value="all">All Days</option>
+                                <option value="mon">Monday - Wednesday</option>
+                                <option value="thu">Thursday - Saturday</option>
+                                <option value="sun">Sunday Special Workshops</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Timetable Rows -->
+                    <div class="space-y-4" id="schedule-container">
+                        <!-- Row 1 -->
+                        <div class="schedule-row p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 flex flex-col md:flex-row md:items-center justify-between gap-4" data-day="mon">
+                            <div class="flex items-start space-x-4">
+                                <div class="w-16 h-16 bg-brand-100 dark:bg-brand-950 text-brand-600 dark:text-brand-400 rounded-2xl flex flex-col items-center justify-center font-mono flex-shrink-0">
+                                    <span class="text-xs font-bold">04:00 PM</span>
+                                    <span class="text-[10px] text-slate-500">05:30 PM</span>
+                                </div>
+                                <div>
+                                    <span class="inline-block bg-brand-500/10 text-brand-600 dark:text-brand-400 border border-brand-500/20 text-[10px] font-bold px-2 py-0.5 rounded mb-1">Mon & Wed</span>
+                                    <h4 class="text-base font-bold text-slate-900 dark:text-white">Fullstack Engineering: Microservices Architecture</h4>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">Batch A1 • Instructor: Prof. Alex Rivera</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3 self-end md:self-center">
+                                <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-amber-500/10 text-amber-600 border border-amber-500/20">Filling Fast</span>
+                                <button onclick="openDemoModal()" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold rounded-xl">Attend Demo</button>
+                            </div>
+                        </div>
+
+                        <!-- Row 2 -->
+                        <div class="schedule-row p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 flex flex-col md:flex-row md:items-center justify-between gap-4" data-day="thu">
+                            <div class="flex items-start space-x-4">
+                                <div class="w-16 h-16 bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 rounded-2xl flex flex-col items-center justify-center font-mono flex-shrink-0">
+                                    <span class="text-xs font-bold">06:00 PM</span>
+                                    <span class="text-[10px] text-slate-500">07:30 PM</span>
+                                </div>
+                                <div>
+                                    <span class="inline-block bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 text-[10px] font-bold px-2 py-0.5 rounded mb-1">Thu & Fri</span>
+                                    <h4 class="text-base font-bold text-slate-900 dark:text-white">JEE Advanced Physics: Electromagnetic Induction</h4>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">Batch Target 2027 • Instructor: Dr. Rajesh Verma</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3 self-end md:self-center">
+                                <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">Admission Open</span>
+                                <button onclick="openDemoModal()" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold rounded-xl">Attend Demo</button>
+                            </div>
+                        </div>
+
+                        <!-- Row 3 -->
+                        <div class="schedule-row p-5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 flex flex-col md:flex-row md:items-center justify-between gap-4" data-day="sun">
+                            <div class="flex items-start space-x-4">
+                                <div class="w-16 h-16 bg-purple-100 dark:bg-purple-950 text-purple-600 dark:text-purple-400 rounded-2xl flex flex-col items-center justify-center font-mono flex-shrink-0">
+                                    <span class="text-xs font-bold">10:00 AM</span>
+                                    <span class="text-[10px] text-slate-500">01:00 PM</span>
+                                </div>
+                                <div>
+                                    <span class="inline-block bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 text-[10px] font-bold px-2 py-0.5 rounded mb-1">Sunday Masterclass</span>
+                                    <h4 class="text-base font-bold text-slate-900 dark:text-white">UPSC Civil Services Answer Writing Bootcamp</h4>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">Special Workshop • Instructor: Vikramaditya Singh</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3 self-end md:self-center">
+                                <span class="text-[10px] font-bold px-3 py-1 rounded-full bg-brand-500/10 text-brand-600 border border-brand-500/20">Free Entry</span>
+                                <button onclick="openDemoModal()" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold rounded-xl">Attend Demo</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- VIEW 4: ABOUT US & FACULTY PAGE -->
+        <!-- =================================================================== -->
+        <section id="page-about" class="page-view">
+            <!-- Header -->
+            <div class="bg-slate-900 text-white py-14">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <h1 class="text-3xl sm:text-5xl font-black">About Apex Academy</h1>
+                    <p class="text-slate-400 text-xs sm:text-sm mt-3 max-w-2xl mx-auto">Reimagining online coaching with master educators, transparent guidance, and rank-boosting technology.</p>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-20">
+                <!-- Mission & Vision Storytelling -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-6">
+                        <span class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-widest">Our Story & Ethos</span>
+                        <h2 class="text-3xl font-black text-slate-900 dark:text-white leading-tight">Empowering Students Worldwide Through Live Mentorship</h2>
+                        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                            Established in 2018, Apex Academy was built with a simple goal: eliminate geographical barriers and bring the top 1% master educators directly to students' screens. We blend live streaming interactive blackboards with AI analytical diagnostics.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 pt-2">
+                            <div class="p-4 bg-brand-50 dark:bg-brand-950/40 rounded-2xl border border-brand-100 dark:border-brand-900">
+                                <div class="text-2xl font-black text-brand-600 dark:text-brand-400">100%</div>
+                                <div class="text-xs font-semibold text-slate-600 dark:text-slate-400">Live Interactive Focus</div>
+                            </div>
+                            <div class="p-4 bg-emerald-50 dark:bg-emerald-950/40 rounded-2xl border border-emerald-100 dark:border-emerald-900">
+                                <div class="text-2xl font-black text-emerald-600 dark:text-emerald-400">25 Max</div>
+                                <div class="text-xs font-semibold text-slate-600 dark:text-slate-400">Batch Size Limit</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80" alt="Students studying together" class="rounded-3xl shadow-xl border border-slate-200 dark:border-slate-800">
+                    </div>
+                </div>
+
+                <!-- Master Faculty Showcase -->
+                <div>
+                    <div class="text-center max-w-2xl mx-auto mb-12">
+                        <span class="text-xs font-bold text-brand-600 dark:text-brand-400 uppercase tracking-widest">World Class Mentors</span>
+                        <h2 class="text-3xl font-black text-slate-900 dark:text-white mt-1">Meet Our Master Faculty</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <!-- Faculty 1 -->
+                        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 text-center shadow-sm hover:shadow-xl transition">
+                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&h=200&q=80" class="w-24 h-24 rounded-full object-cover mx-auto mb-4 border-2 border-brand-500" alt="Faculty">
+                            <h3 class="text-base font-bold text-slate-900 dark:text-white">Dr. Rajesh Verma</h3>
+                            <p class="text-xs text-brand-600 dark:text-brand-400 font-semibold mb-2">Head of Physics (16+ yrs exp)</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4 line-clamp-2">Ph.D. in Physics, Ex-Senior IIT Mentor. Mentored over 50+ Top 100 AIR rankers.</p>
+                            <button onclick="openFacultyModal('Dr. Rajesh Verma', 'Head of Physics', 'Ph.D. in Physics (IIT Delhi)', '16+ Years', 'Mentored AIR 1, 14, and 32 in JEE Advanced. Author of 3 physics problem books.')" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-brand-600 hover:text-white text-slate-700 dark:text-slate-300 text-xs font-bold rounded-xl transition">
+                                View Full Bio
+                            </button>
+                        </div>
+
+                        <!-- Faculty 2 -->
+                        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 text-center shadow-sm hover:shadow-xl transition">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&h=200&q=80" class="w-24 h-24 rounded-full object-cover mx-auto mb-4 border-2 border-brand-500" alt="Faculty">
+                            <h3 class="text-base font-bold text-slate-900 dark:text-white">Prof. Alex Rivera</h3>
+                            <p class="text-xs text-brand-600 dark:text-brand-400 font-semibold mb-2">Computer Science Lead</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4 line-clamp-2">Ex-FAANG Senior Engineer. Specialist in Data Structures, Algorithms, and System Design.</p>
+                            <button onclick="openFacultyModal('Prof. Alex Rivera', 'Computer Science Lead', 'M.S. in Computer Science (Stanford)', '12+ Years', 'Architected high-scale systems at FAANG companies. Taught over 12,000 developers globally.')" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-brand-600 hover:text-white text-slate-700 dark:text-slate-300 text-xs font-bold rounded-xl transition">
+                                View Full Bio
+                            </button>
+                        </div>
+
+                        <!-- Faculty 3 -->
+                        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 text-center shadow-sm hover:shadow-xl transition">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&h=200&q=80" class="w-24 h-24 rounded-full object-cover mx-auto mb-4 border-2 border-brand-500" alt="Faculty">
+                            <h3 class="text-base font-bold text-slate-900 dark:text-white">Dr. Sunita Mehra</h3>
+                            <p class="text-xs text-brand-600 dark:text-brand-400 font-semibold mb-2">Academic Director & Bio</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4 line-clamp-2">M.D. & Senior Educator. Expert in NEET Biology and NCERT line-by-line decoding.</p>
+                            <button onclick="openFacultyModal('Dr. Sunita Mehra', 'Academic Director & Bio', 'M.D. (AIIMS Delhi)', '14+ Years', 'Recipient of National Education Excellence Award. Trained 300+ doctors in premier medical colleges.')" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-brand-600 hover:text-white text-slate-700 dark:text-slate-300 text-xs font-bold rounded-xl transition">
+                                View Full Bio
+                            </button>
+                        </div>
+
+                        <!-- Faculty 4 -->
+                        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 text-center shadow-sm hover:shadow-xl transition">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&h=200&q=80" class="w-24 h-24 rounded-full object-cover mx-auto mb-4 border-2 border-brand-500" alt="Faculty">
+                            <h3 class="text-base font-bold text-slate-900 dark:text-white">Vikramaditya Singh</h3>
+                            <p class="text-xs text-brand-600 dark:text-brand-400 font-semibold mb-2">Civil Services Mentor</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4 line-clamp-2">Former Civil Servant, Specialist in Indian Polity, Ethics, and UPSC Mains Answer Strategy.</p>
+                            <button onclick="openFacultyModal('Vikramaditya Singh', 'Civil Services Mentor', 'M.A. Public Admin', '10+ Years', 'Mentored 120+ successful IAS, IPS, and IFS officer cadets in UPSC CSE examinations.')" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-brand-600 hover:text-white text-slate-700 dark:text-slate-300 text-xs font-bold rounded-xl transition">
+                                View Full Bio
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accreditation & Awards Gallery -->
+                <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8 text-center space-y-6">
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Recognized Accreditations & Awards</h3>
+                    <div class="flex flex-wrap items-center justify-center gap-8 md:gap-16 opacity-80">
+                        <div class="flex items-center space-x-2 font-bold text-slate-700 dark:text-slate-300 text-xs">
+                            <i class="fa-solid fa-award text-2xl text-amber-500"></i>
+                            <span>Best EdTech Innovation 2025</span>
+                        </div>
+                        <div class="flex items-center space-x-2 font-bold text-slate-700 dark:text-slate-300 text-xs">
+                            <i class="fa-solid fa-certificate text-2xl text-brand-500"></i>
+                            <span>ISO 9001:2015 Quality Certified</span>
+                        </div>
+                        <div class="flex items-center space-x-2 font-bold text-slate-700 dark:text-slate-300 text-xs">
+                            <i class="fa-solid fa-shield-halved text-2xl text-emerald-500"></i>
+                            <span>Global STEM Excellence Partner</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- VIEW 5: CONTACT US & SUPPORT PAGE -->
+        <!-- =================================================================== -->
+        <section id="page-contact" class="page-view">
+            <!-- Header -->
+            <div class="bg-slate-900 text-white py-14">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h1 class="text-3xl sm:text-4xl font-black">Contact Us & Student Support</h1>
+                    <p class="text-slate-400 text-xs sm:text-sm mt-2 max-w-2xl">Connect with our academic counselors, inquire about admissions, or request 24/7 technical support.</p>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <!-- Interactive Contact Form with Validation -->
+                    <div class="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-6">Send an Official Inquiry</h2>
+                        
+                        <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Student Full Name *</label>
+                                <input type="text" id="contact-name" required placeholder="e.g. Alex Morgan" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 dark:bg-slate-950 text-xs focus:outline-none focus:border-brand-500">
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Email Address *</label>
+                                    <input type="email" id="contact-email" required placeholder="alex@example.com" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 dark:bg-slate-950 text-xs focus:outline-none focus:border-brand-500">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Phone Number *</label>
+                                    <input type="tel" id="contact-phone" required placeholder="+1 (555) 000-0000" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 dark:bg-slate-950 text-xs focus:outline-none focus:border-brand-500">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Program Interest</label>
+                                <select class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 dark:bg-slate-950 text-xs focus:outline-none focus:border-brand-500 text-slate-700 dark:text-slate-200">
+                                    <option>IIT-JEE / NEET Entrance Batch</option>
+                                    <option>Fullstack Software Engineering</option>
+                                    <option>Class 9 - 12 CBSE/ICSE Tuition</option>
+                                    <option>Civil Services General Studies</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Your Message *</label>
+                                <textarea rows="4" id="contact-msg" required placeholder="How can we assist you with batch timings, fee structures, or demo classes?" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 dark:bg-slate-950 text-xs focus:outline-none focus:border-brand-500"></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full py-3 bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition shadow-md">
+                                Submit Inquiry
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Location Details & FAQ Accordion -->
+                    <div class="space-y-8">
+                        <!-- Direct Helpline & Quick Chat -->
+                        <div class="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                            <h3 class="text-base font-bold text-slate-900 dark:text-white">Direct Communication Support</h3>
+                            <div class="flex flex-wrap gap-4">
+                                <a href="tel:+18005550199" class="flex-1 p-4 rounded-2xl bg-brand-50 dark:bg-brand-950/40 border border-brand-200 dark:border-brand-800 flex items-center space-x-3 text-xs font-bold text-brand-600 dark:text-brand-400">
+                                    <i class="fa-solid fa-phone text-lg"></i>
+                                    <div>
+                                        <div class="text-[10px] text-slate-500 uppercase">Toll-Free Helpline</div>
+                                        <div>+1 (800) 555-0199</div>
+                                    </div>
+                                </a>
+                                <a href="https://whatsapp.com" target="_blank" rel="noopener" class="flex-1 p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 flex items-center space-x-3 text-xs font-bold text-emerald-600 dark:text-emerald-400">
+                                    <i class="fa-brands fa-whatsapp text-xl"></i>
+                                    <div>
+                                        <div class="text-[10px] text-slate-500 uppercase">WhatsApp Quick Support</div>
+                                        <div>Chat Live Now</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Embedded Google Map Mockup -->
+                        <div class="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+                            <h3 class="text-base font-bold text-slate-900 dark:text-white">Headquarters Location</h3>
+                            <div class="relative w-full h-48 bg-slate-800 rounded-2xl overflow-hidden flex items-center justify-center text-slate-400 border border-slate-700">
+                                <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=800&q=80" alt="Map Preview" class="w-full h-full object-cover opacity-40">
+                                <div class="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
+                                    <i class="fa-solid fa-location-dot text-3xl text-brand-500 animate-bounce mb-2"></i>
+                                    <div class="text-xs font-bold text-white">Apex Tower, Innovation Hub, Tech City</div>
+                                    <div class="text-[10px] text-slate-300">Mon-Sat (09:00 AM - 08:00 PM EST)</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Accordion -->
+                        <div class="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+                            <h3 class="text-base font-bold text-slate-900 dark:text-white mb-4">Frequently Asked Questions</h3>
+                            
+                            <div class="space-y-2">
+                                <div class="border-b border-slate-100 dark:border-slate-800 pb-3">
+                                    <button onclick="toggleFaq('faq-1')" class="w-full text-left flex justify-between items-center text-xs font-bold text-slate-800 dark:text-slate-200">
+                                        <span>How do live online classes work on Apex Academy?</span>
+                                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                                    </button>
+                                    <p id="faq-1" class="hidden text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">Classes are broadcasted live with HD multi-camera setups, digital whiteboards, and real-time audio Q&A capabilities.</p>
+                                </div>
+
+                                <div class="border-b border-slate-100 dark:border-slate-800 pb-3">
+                                    <button onclick="toggleFaq('faq-2')" class="w-full text-left flex justify-between items-center text-xs font-bold text-slate-800 dark:text-slate-200">
+                                        <span>Can I request a full refund if I am dissatisfied?</span>
+                                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                                    </button>
+                                    <p id="faq-2" class="hidden text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">Yes, we provide a 7-day no-questions-asked money-back guarantee after batch commencement.</p>
+                                </div>
+
+                                <div>
+                                    <button onclick="toggleFaq('faq-3')" class="w-full text-left flex justify-between items-center text-xs font-bold text-slate-800 dark:text-slate-200">
+                                        <span>Are class recordings available after live sessions?</span>
+                                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                                    </button>
+                                    <p id="faq-3" class="hidden text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">All recordings are automatically uploaded to your personal dashboard within 2 hours of live class completion.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- GLOBAL FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 text-xs border-t border-slate-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+                
+                <!-- Brand Brief & Social Icons -->
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTo('home')">
+                        <div class="w-10 h-10 bg-brand-600 rounded-xl flex items-center justify-center text-white shadow-md">
+                            <i class="fa-solid fa-graduation-cap text-lg"></i>
+                        </div>
+                        <span class="text-xl font-black text-white">Apex<span class="text-brand-500">Academy</span></span>
+                    </div>
+                    <p class="text-slate-400 text-xs leading-relaxed max-w-sm">
+                        Leading online coaching platform delivering live interactive lectures, test series, and mentorship for competitive exams and skill advancement.
+                    </p>
+
+                    <!-- Social Media Links -->
+                    <div class="pt-2 flex items-center space-x-3">
+                        <a href="https://youtube.com" target="_blank" rel="noopener" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-red-600 text-slate-300 hover:text-white flex items-center justify-center transition hover:-translate-y-1" aria-label="YouTube">
+                            <i class="fa-brands fa-youtube"></i>
+                        </a>
+                        <a href="https://facebook.com" target="_blank" rel="noopener" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-blue-600 text-slate-300 hover:text-white flex items-center justify-center transition hover:-translate-y-1" aria-label="Facebook">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" rel="noopener" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-sky-500 text-slate-300 hover:text-white flex items-center justify-center transition hover:-translate-y-1" aria-label="Twitter X">
+                            <i class="fa-brands fa-x-twitter"></i>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" rel="noopener" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-pink-600 text-slate-300 hover:text-white flex items-center justify-center transition hover:-translate-y-1" aria-label="Instagram">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-brand-600 text-slate-300 hover:text-white flex items-center justify-center transition hover:-translate-y-1" aria-label="LinkedIn">
+                            <i class="fa-brands fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://discord.com" target="_blank" rel="noopener" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-indigo-600 text-slate-300 hover:text-white flex items-center justify-center transition hover:-translate-y-1" aria-label="Discord">
+                            <i class="fa-brands fa-discord"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Page Navigation -->
+                <div class="space-y-3">
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider">Pages View</h4>
+                    <ul class="space-y-2">
+                        <li><button onclick="navigateTo('home')" class="hover:text-white transition">Home Page</button></li>
+                        <li><button onclick="navigateTo('courses')" class="hover:text-white transition">Courses & Programs</button></li>
+                        <li><button onclick="navigateTo('schedule')" class="hover:text-white transition">Live Schedule & Batches</button></li>
+                        <li><button onclick="navigateTo('about')" class="hover:text-white transition">About Us & Faculty</button></li>
+                        <li><button onclick="navigateTo('contact')" class="hover:text-white transition">Contact & Support</button></li>
+                    </ul>
+                </div>
+
+                <!-- Popular Courses Links -->
+                <div class="space-y-3">
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider">Top Programs</h4>
+                    <ul class="space-y-2">
+                        <li><button onclick="navigateTo('courses')" class="hover:text-white transition">IIT-JEE Target Batch</button></li>
+                        <li><button onclick="navigateTo('courses')" class="hover:text-white transition">NEET Medical Excellence</button></li>
+                        <li><button onclick="navigateTo('courses')" class="hover:text-white transition">Fullstack Software Engineering</button></li>
+                        <li><button onclick="navigateTo('courses')" class="hover:text-white transition">CBSE Class 10th Master</button></li>
+                        <li><button onclick="navigateTo('courses')" class="hover:text-white transition">UPSC Civil Services GS</button></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter Form -->
+                <div class="space-y-3">
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider">Newsletter Subscription</h4>
+                    <p class="text-[11px] text-slate-400">Subscribe to receive free study notes, test series alerts, and scholarship news.</p>
+                    <form onsubmit="handleNewsletter(event)" class="space-y-2">
+                        <input type="email" required placeholder="Enter email address..." class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-brand-500">
+                        <button type="submit" class="w-full py-2 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl text-xs transition">
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500">
+                <p>&copy; 2026 Apex Academy Platforms Inc. All rights reserved.</p>
+                <div class="flex space-x-4 mt-4 sm:mt-0">
+                    <a href="#" class="hover:text-slate-400">Privacy Policy</a>
+                    <a href="#" class="hover:text-slate-400">Terms of Service</a>
+                    <a href="#" class="hover:text-slate-400">Refund Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- DEMO BOOKING MODAL -->
+    <div id="demo-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-6 shadow-2xl relative border border-slate-200 dark:border-slate-800">
+            <button onclick="closeModal('demo-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="w-12 h-12 bg-brand-100 dark:bg-brand-950 text-brand-600 dark:text-brand-400 rounded-2xl flex items-center justify-center text-xl mb-4">
+                <i class="fa-solid fa-video"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-1">Book Free Demo Session</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-6">Experience our live streaming classroom and interact 1-on-1 with master faculty.</p>
+
+            <form onsubmit="handleDemoSubmit(event)" class="space-y-3">
+                <input type="text" required placeholder="Student Name" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 dark:bg-slate-950 text-xs focus:outline-none focus:border-brand-500">
+                <input type="email" required placeholder="Email Address" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 dark:bg-slate-950 text-xs focus:outline-none focus:border-brand-500">
+                <input type="tel" required placeholder="Phone Number" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 dark:bg-slate-950 text-xs focus:outline-none focus:border-brand-500">
+                <button type="submit" class="w-full py-3 bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition shadow-lg">
+                    Confirm Free Booking
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- COURSE DETAILS MODAL -->
+    <div id="course-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative border border-slate-200 dark:border-slate-800 space-y-4">
+            <button onclick="closeModal('course-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <span id="modal-course-cat" class="bg-brand-500/10 text-brand-600 dark:text-brand-400 text-[10px] font-bold uppercase px-2.5 py-1 rounded-full">Category</span>
+            <h3 id="modal-course-title" class="text-xl font-bold text-slate-900 dark:text-white">Course Title</h3>
+            <p id="modal-course-desc" class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Detailed course overview description goes here.</p>
+            
+            <div class="p-4 bg-slate-50 dark:bg-slate-950 rounded-2xl border border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <div>
+                    <span class="text-[10px] text-slate-400 uppercase">Discounted Fee</span>
+                    <div id="modal-course-price" class="text-2xl font-black text-brand-600 dark:text-brand-400">$0</div>
+                </div>
+                <button onclick="closeModal('course-modal'); openDemoModal();" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold rounded-xl transition shadow-md">
+                    Enroll Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FACULTY BIO MODAL -->
+    <div id="faculty-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-6 shadow-2xl relative border border-slate-200 dark:border-slate-800 space-y-4">
+            <button onclick="closeModal('faculty-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="flex items-center space-x-4">
+                <div class="w-14 h-14 bg-brand-600 text-white font-bold text-xl rounded-2xl flex items-center justify-center">
+                    <i class="fa-solid fa-user-graduate"></i>
+                </div>
+                <div>
+                    <h3 id="faculty-name" class="text
