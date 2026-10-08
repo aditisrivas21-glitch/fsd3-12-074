@@ -1,8 +1,13 @@
-import express from "express";
-
+import express, { response } from "express";
+import { products } from "./data.js";
 
 const app = express();
 
+app.get("api/products",(req,res)=>{
+
+    let sortedProducts = products.map(({name,image,price,id})=>({name,image,price,id}))
+    res.status(200).json({count:sortedProducts.length,data:sortedProducts})
+})
 
 
 
